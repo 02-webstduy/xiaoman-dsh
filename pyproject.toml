@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xiaoman"
+version = "0.1.0"
+description = "小满：一个记得住事的脱困搭子"
+readme = "ROADMAP.md"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.29",
+  "httpx>=0.27",
+]
+
+[project.scripts]
+xiaoman = "xiaoman.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+xiaoman = ["persona/*.md"]

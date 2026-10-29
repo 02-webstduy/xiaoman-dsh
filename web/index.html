@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#14110f" />
+    <title>小满</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div id="pet" class="pet" data-mood="calm" aria-hidden="true"></div>
+      <div class="who">
+        <h1><span id="name">小满</span><span class="day" id="day">第 1 天</span></h1>
+        <p class="status"><span class="dot" id="dot"></span><span id="status">正在连模型…</span></p>
+      </div>
+      <nav class="actions">
+        <button type="button" class="ghost" id="persona-btn">人格</button>
+        <button type="button" class="ghost" id="reset-btn">新对话</button>
+      </nav>
+    </header>
+
+    <main id="log" class="log" role="log" aria-live="polite" aria-label="对话">
+      <p class="note" id="note">第 1 步：它还没装记忆——刷新不丢，重启就忘。第一句随便说。</p>
+    </main>
+
+    <form id="form" class="composer">
+      <textarea
+        id="input"
+        rows="1"
+        maxlength="4000"
+        placeholder="说点什么，乱的也行…"
+        autocomplete="off"
+        enterkeyhint="send"
+      ></textarea>
+      <button id="send" type="submit" class="send" aria-label="发送">↑</button>
+    </form>
+
+    <dialog id="persona-dialog" class="dialog">
+      <header>
+        <strong>人格契约</strong>
+        <button type="button" class="ghost" id="persona-close">关</button>
+      </header>
+      <pre id="persona-text">加载中…</pre>
+      <p class="hint">改 <code>src/xiaoman/persona/base.md</code>，刷新页面即生效。</p>
+    </dialog>
+
+    <script type="module" src="/assets/app.js"></script>
+  </body>
+</html>

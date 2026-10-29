@@ -1,0 +1,14 @@
+ROADMAP.md
+pyproject.toml
+src/xiaoman/__init__.py
+src/xiaoman/__main__.py
+src/xiaoman/app.py
+src/xiaoman/config.py
+src/xiaoman/llm.py
+src/xiaoman.egg-info/PKG-INFO
+src/xiaoman.egg-info/SOURCES.txt
+src/xiaoman.egg-info/dependency_links.txt
+src/xiaoman.egg-info/entry_points.txt
+src/xiaoman.egg-info/requires.txt
+src/xiaoman.egg-info/top_level.txt
+src/xiaoman/persona/base.md

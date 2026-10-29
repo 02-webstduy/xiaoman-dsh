@@ -1,0 +1,2 @@
+[console_scripts]
+xiaoman = xiaoman.__main__:main
