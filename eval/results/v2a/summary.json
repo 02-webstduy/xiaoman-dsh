@@ -1,0 +1,39 @@
+{
+  "messages": 40,
+  "pass_messages": 35,
+  "pass_rate": 0.875,
+  "avg_len": 41.1,
+  "p90_len": 57,
+  "avg_q": 1.05,
+  "ttft_ms": 129,
+  "rule_fail": {
+    "length>120": 0,
+    "questions>1": 4,
+    "banned": 0,
+    "list": 0,
+    "heading": 0
+  },
+  "special_fail": 1,
+  "top_openers": [
+    [
+      "先分清是哪",
+      3
+    ],
+    [
+      "了解了，你",
+      2
+    ],
+    [
+      "那你最近有",
+      1
+    ],
+    [
+      "焦虑的时候",
+      1
+    ],
+    [
+      "是没方向，",
+      1
+    ]
+  ]
+}

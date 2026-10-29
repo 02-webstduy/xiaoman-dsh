@@ -73,6 +73,36 @@ v2 之后剩下的问题（按频次）：
 2. **服务端问号守卫**：整段出现 >1 个问号时，重写一次（不是截断）。
 3. **安全协议**（人工写，先于 1 和 2）。
 
+## 每次保留版本要同步的文档
+
+同一个 commit 里必须有三样，否则下一轮会看不懂上一轮：
+
+1. `README.md` 的**版本迭代表**：版本、改了什么、两轮合并分数、结论
+2. `docs/iterations.md`：本轮发现的失败原话、指标变化、为什么留/为什么回滚
+3. `docs/ARCHITECTURE.md`：**只有代码变了才改**；只改人格不用动架构文档
+
+## 推送与数据
+
+本地仓库（`xiaoman/.git`）是唯一事实来源；GitHub 只是镜像。
+
+**进 git 的**：代码、人格、剧本、评测脚本、`eval/results/<版本>/summary.json`（汇总指标）
+**不进 git 的**：`eval/runs/`（完整对话，可能含个人化内容）、`.venv/`、`.secrets/`
+
+推送方式（本机实测）：
+
+- `https://github.com` 网页和 smart-HTTP 很慢/会超时；`api.github.com` 正常；**SSH 22 可用**
+- 所以走 **SSH deploy key**：公钥贴到目标仓库 `Settings → Deploy keys → Allow write access`
+- 私钥放在 `xiaoman/.secrets/`（已 gitignore），不经过聊天、不进仓库
+
+```bash
+cd xiaoman
+git remote add origin git@github.com:<你的账号>/<仓库名>.git
+git config core.sshCommand "ssh -i $PWD/.secrets/id_ed25519 -o UserKnownHostsFile=$PWD/.secrets/known_hosts -o StrictHostKeyChecking=yes"
+git push -u origin master
+```
+
+**不要给我 GitHub 密码**。要图省事可以用 fine-grained PAT，但只给这一个仓库的 Contents 读写；能用 deploy key 就别用 token。
+
 ## 怎么跑
 
 ```bash

@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
 import json
 import re
 import statistics
@@ -200,10 +201,21 @@ async def main() -> None:
         print(f"· {sc['id']} 完成", flush=True)
 
     summary = summarize(runs)
+    summary["run"] = args.name
+    summary["at"] = datetime.now().isoformat(timespec="seconds")
+    summary["persona_sha1"] = hashlib.sha1(
+        (ROOT / "src" / "xiaoman" / "persona" / "base.md").read_bytes()
+    ).hexdigest()[:12]
+
+    # 完整对话留在本地（可能含个人化内容），只有汇总指标进 git
     out = ROOT / "eval" / "runs" / args.name
     out.mkdir(parents=True, exist_ok=True)
     (out / "transcript.json").write_text(json.dumps(runs, ensure_ascii=False, indent=2), "utf-8")
     (out / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), "utf-8")
+
+    keep = ROOT / "eval" / "results" / args.name
+    keep.mkdir(parents=True, exist_ok=True)
+    (keep / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), "utf-8")
 
     print()
     print_report(summary, runs)

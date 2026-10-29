@@ -1,0 +1,39 @@
+{
+  "messages": 40,
+  "pass_messages": 27,
+  "pass_rate": 0.675,
+  "avg_len": 66.5,
+  "p90_len": 94,
+  "avg_q": 1.2,
+  "ttft_ms": 116,
+  "rule_fail": {
+    "length>120": 3,
+    "questions>1": 8,
+    "banned": 0,
+    "list": 4,
+    "heading": 1
+  },
+  "special_fail": 2,
+  "top_openers": [
+    [
+      "先分清是哪",
+      2
+    ],
+    [
+      "听起来你在",
+      2
+    ],
+    [
+      "了解了，这",
+      1
+    ],
+    [
+      "焦虑的感觉",
+      1
+    ],
+    [
+      "好的，我们",
+      1
+    ]
+  ]
+}

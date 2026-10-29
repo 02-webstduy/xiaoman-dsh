@@ -1,0 +1,110 @@
+{
+  "generated_at": "2026-10-29T10:47:12",
+  "runs": [
+    {
+      "run": "baseline",
+      "note": "bc9c74a · 初始人格",
+      "messages": 40,
+      "pass_messages": 27,
+      "pass_rate": 0.675,
+      "avg_len": 66.5,
+      "avg_q": 1.2,
+      "rule_fail": {
+        "length>120": 3,
+        "questions>1": 8,
+        "list": 4,
+        "heading": 1
+      },
+      "special_fail": 2
+    },
+    {
+      "run": "baseline2",
+      "note": "bc9c74a · 初始人格（复跑，用于估噪声）",
+      "messages": 40,
+      "pass_messages": 26,
+      "pass_rate": 0.65,
+      "avg_len": 52.6,
+      "avg_q": 1.18,
+      "rule_fail": {
+        "length>120": 4,
+        "questions>1": 10,
+        "list": 3
+      },
+      "special_fail": 2
+    },
+    {
+      "run": "round1",
+      "note": "未提交 · 只加\"卡住\"范围限定（已回滚）",
+      "messages": 40,
+      "pass_messages": 24,
+      "pass_rate": 0.6,
+      "avg_len": 65.8,
+      "avg_q": 1.23,
+      "rule_fail": {
+        "length>120": 4,
+        "questions>1": 13,
+        "banned": 1,
+        "list": 4,
+        "heading": 1
+      },
+      "special_fail": 3
+    },
+    {
+      "run": "v2a",
+      "note": "0aba7ab · 范围限定 + 格式纪律",
+      "messages": 40,
+      "pass_messages": 35,
+      "pass_rate": 0.875,
+      "avg_len": 41.1,
+      "avg_q": 1.05,
+      "rule_fail": {
+        "questions>1": 4
+      },
+      "special_fail": 1
+    },
+    {
+      "run": "v2b",
+      "note": "0aba7ab · 范围限定 + 格式纪律（复跑）",
+      "messages": 40,
+      "pass_messages": 33,
+      "pass_rate": 0.825,
+      "avg_len": 39.8,
+      "avg_q": 1.12,
+      "rule_fail": {
+        "questions>1": 7
+      },
+      "special_fail": 1
+    },
+    {
+      "run": "v3a",
+      "note": "未提交 · 再加\"别分析/接上文\"（已回滚）",
+      "messages": 40,
+      "pass_messages": 33,
+      "pass_rate": 0.825,
+      "avg_len": 63.3,
+      "avg_q": 0.93,
+      "rule_fail": {
+        "length>120": 4,
+        "questions>1": 1,
+        "list": 3,
+        "heading": 1
+      },
+      "special_fail": 2
+    },
+    {
+      "run": "v3b",
+      "note": "未提交 · 同上（复跑）",
+      "messages": 40,
+      "pass_messages": 28,
+      "pass_rate": 0.7,
+      "avg_len": 44.8,
+      "avg_q": 1.2,
+      "rule_fail": {
+        "length>120": 2,
+        "questions>1": 9,
+        "list": 1
+      },
+      "special_fail": 2
+    }
+  ]
+}

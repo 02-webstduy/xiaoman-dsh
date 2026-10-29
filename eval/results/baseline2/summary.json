@@ -1,0 +1,39 @@
+{
+  "messages": 40,
+  "pass_messages": 26,
+  "pass_rate": 0.65,
+  "avg_len": 52.6,
+  "p90_len": 110,
+  "avg_q": 1.18,
+  "ttft_ms": 122,
+  "rule_fail": {
+    "length>120": 4,
+    "questions>1": 10,
+    "banned": 0,
+    "list": 3,
+    "heading": 0
+  },
+  "special_fail": 2,
+  "top_openers": [
+    [
+      "好的，我们",
+      2
+    ],
+    [
+      "原来是因为",
+      2
+    ],
+    [
+      "先分清是哪",
+      1
+    ],
+    [
+      "那你最近有",
+      1
+    ],
+    [
+      "理解你的感",
+      1
+    ]
+  ]
+}

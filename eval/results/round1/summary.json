@@ -1,0 +1,39 @@
+{
+  "messages": 40,
+  "pass_messages": 24,
+  "pass_rate": 0.6,
+  "avg_len": 65.8,
+  "p90_len": 83,
+  "avg_q": 1.23,
+  "ttft_ms": 123,
+  "rule_fail": {
+    "length>120": 4,
+    "questions>1": 13,
+    "banned": 1,
+    "list": 4,
+    "heading": 1
+  },
+  "special_fail": 3,
+  "top_openers": [
+    [
+      "问一个：是",
+      2
+    ],
+    [
+      "不是这样的",
+      2
+    ],
+    [
+      "了解了，你",
+      2
+    ],
+    [
+      "你觉得自己",
+      2
+    ],
+    [
+      "这次是没方",
+      1
+    ]
+  ]
+}
