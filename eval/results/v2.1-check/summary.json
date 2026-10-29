@@ -1,0 +1,42 @@
+{
+  "messages": 40,
+  "pass_messages": 33,
+  "pass_rate": 0.825,
+  "avg_len": 48.4,
+  "p90_len": 96,
+  "avg_q": 1.07,
+  "ttft_ms": 117,
+  "rule_fail": {
+    "length>120": 2,
+    "questions>1": 4,
+    "banned": 0,
+    "list": 2,
+    "heading": 0
+  },
+  "special_fail": 1,
+  "top_openers": [
+    [
+      "先分清是哪",
+      5
+    ],
+    [
+      "了解了，你",
+      3
+    ],
+    [
+      "好的，我们",
+      2
+    ],
+    [
+      "有没有什么",
+      1
+    ],
+    [
+      "理解你的感",
+      1
+    ]
+  ],
+  "run": "v2.1-check",
+  "at": "2026-10-29T16:32:59",
+  "persona_sha1": "5942ea40804e"
+}

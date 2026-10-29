@@ -79,6 +79,7 @@ docs/              ARCHITECTURE.md、iterations.md
 | [WORKFLOW.md](WORKFLOW.md) | 自玩评测：角色、流程、噪声、红线 |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 前后端结构、一次输入到输出的完整链路 |
 | [docs/iterations.md](docs/iterations.md) | 每个版本的改动、分数、失败案例 |
+| [docs/LANDSCAPE.md](docs/LANDSCAPE.md) | 现有项目调研：知识库 / 日报 / 规划能不能直接拿来用 |
 
 ## Roadmap
 
