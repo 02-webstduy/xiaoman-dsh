@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import time
 import uuid
 from dataclasses import dataclass, field
@@ -19,11 +20,12 @@ from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, Str
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from . import llm
+from . import llm, safety
 from .config import AppConfig, load
 
 cfg: AppConfig = load()
 TZ = ZoneInfo("Asia/Shanghai")
+logger = logging.getLogger("xiaoman")
 
 app = FastAPI(title=cfg.name, docs_url=None, redoc_url=None)
 app.mount("/assets", StaticFiles(directory=cfg.web_dir), name="assets")
@@ -158,6 +160,11 @@ async def persona() -> PlainTextResponse:
     return PlainTextResponse(persona_text(), headers={"Cache-Control": "no-store"})
 
 
+@app.get("/api/safety")
+async def safety_info() -> dict:
+    return safety.help_info(cfg.safety)
+
+
 @app.post("/api/reset")
 async def reset(request: Request) -> dict:
     session: Session = request.state.session
@@ -181,6 +188,25 @@ async def chat(payload: ChatIn, request: Request) -> StreamingResponse:
 
         async with session.lock:
             session.messages.append({"role": "user", "content": text})
+
+            # 红线：命中危机语句就绕开模型，用固定回应
+            hit = safety.detect(text, cfg.safety) if cfg.safety.enabled else None
+            if hit:
+                answer = safety.build_reply(cfg.safety)
+                logger.warning("safety_trigger session=%s", session.id[:8])
+                yield sse("delta", {"text": answer})
+                session.messages.append({"role": "assistant", "content": answer})
+                yield sse(
+                    "done",
+                    {
+                        "ms": int((time.perf_counter() - started) * 1000),
+                        "chars": len(answer),
+                        "usage": {},
+                        "safety": True,
+                    },
+                )
+                return
+
             messages = [{"role": "system", "content": system_prompt()}] + session.messages[
                 -cfg.model.max_history :
             ]
@@ -224,5 +250,6 @@ async def health() -> dict:
         "base_url": cfg.model.base_url,
         "latency_ms": latency,
         "detail": detail,
+        "safety": cfg.safety.enabled,
         "persona_mtime": cfg.persona_path.stat().st_mtime,
     }

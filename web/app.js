@@ -224,8 +224,51 @@ dialog.addEventListener("click", (event) => {
   if (event.target === dialog) dialog.close();
 });
 
-/* ------------------------------------------------------------------ 新对话 */
+/* ------------------------------------------------------------------ 求助 */
 
+const helpDialog = $("help-dialog");
+
+function addHelpSection(body, title, items) {
+  if (!items || !items.length) return;
+  const heading = document.createElement("p");
+  heading.className = "help-title";
+  heading.textContent = title;
+  body.appendChild(heading);
+
+  const list = document.createElement("ul");
+  list.className = "help-list";
+  for (const item of items) {
+    const li = document.createElement("li");
+    li.textContent = item;
+    list.appendChild(li);
+  }
+  body.appendChild(list);
+}
+
+$("help-btn").addEventListener("click", async () => {
+  const body = $("help-body");
+  body.replaceChildren();
+  try {
+    const res = await fetch("/api/safety");
+    const info = await res.json();
+    addHelpSection(body, "能马上联系的人", info.contacts);
+    addHelpSection(body, "可以打的电话", info.hotlines);
+    if (!info.contacts?.length && !info.hotlines?.length) {
+      body.textContent = "还没有配置联系人和热线，请直接拨 120。";
+    }
+  } catch {
+    body.textContent = "读取失败，请直接拨 120 或 12356。";
+  }
+  helpDialog.showModal();
+});
+
+$("help-close").addEventListener("click", () => helpDialog.close());
+
+helpDialog.addEventListener("click", (event) => {
+  if (event.target === helpDialog) helpDialog.close();
+});
+
+/* ------------------------------------------------------------------ 新对话 */
 $("reset-btn").addEventListener("click", async () => {
   if (streaming) controller?.abort();
   if (!confirm("清掉这段对话，重新开始？")) return;

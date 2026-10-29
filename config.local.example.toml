@@ -1,0 +1,15 @@
+# 本机私密配置：覆盖 config.toml，且不会提交到 Git。
+# 直接复制本文件为 config.local.toml 再改。
+
+[model]
+base_url = "http://vllm-qwen:8000/v1"
+model = "/workspace/models/Qwen2.5-7B-AWQ"
+
+[safety]
+# 危机时要它劝你联系的人。写在这里，不要写进 config.toml。
+# 手机号、QQ、微信都行，写成一行一个，越具体越好。
+contacts = [
+  # "妈妈 138xxxx0000（随时可以打）",
+  # "阿哲 QQ 12345678",
+  # "室友 微信 xxxx",
+]

@@ -25,6 +25,7 @@
 | [src/xiaoman/llm.py](../src/xiaoman/llm.py) | 调 vLLM、解析流、超时/重试、错误文案 | 不知道「人格」「会话」 |
 | [src/xiaoman/config.py](../src/xiaoman/config.py) | 读 `config.toml` + 环境变量 | 不读业务数据 |
 | [src/xiaoman/persona/base.md](../src/xiaoman/persona/base.md) | 人格契约与规则 | 不写实现细节 |
+| [src/xiaoman/safety.py](../src/xiaoman/safety.py) | 危机触发词、固定回应、求助信息 | 不调用模型 |
 | [scripts/selfplay.py](../scripts/selfplay.py) | 固定剧本跑真实接口、算指标 | 不改产品代码 |
 
 ## 3. 一次输入到输出的完整链路
@@ -59,6 +60,7 @@ sequenceDiagram
 4. `fetch POST /api/chat`，body `{"text": "..."}`，准备读流
 5. 中间件按 cookie 找 Session；没有就新建（内存 dict，最多 200 个）
 6. 进 `session.lock`（同一会话串行），把 user 消息追加进 `session.messages`
+6.5 **红线检查**：命中危机语句 → 直接用 `safety.build_reply()` 拼固定回应，跳过 7–10，`done` 里带 `safety: true`
 7. 组装 `messages`：`[system(persona 文件 + 此刻)] + messages[-max_history:]`
 8. [llm.stream_chat](../src/xiaoman/llm.py) 向 vLLM 发 `stream=true`、`stream_options.include_usage`
 9. 逐行解析 `data:`，取出 `delta.content` 产出文本；同时记 usage
@@ -73,7 +75,8 @@ sequenceDiagram
 | 会话消息 | `app.py` 里的 `_sessions` 字典 | 进程内；重启即消失；6 小时 TTL |
 | 会话身份 | `xmn_sid` cookie（HttpOnly） | 6 小时 |
 | 人格 | `persona/base.md` + mtime 缓存 | 文件改了下次请求即生效 |
-| 配置 | `config.toml` + `XIAOMAN_*` 环境变量 | 改完重启 |
+| 配置 | `config.toml` + `config.local.toml`（私密覆盖）+ `XIAOMAN_*` 环境变量 | 改完重启 |
+| 安全资源 | `config.local.toml` 的 `[safety]` | 改完重启；不进公开仓库 |
 | 模型连接 | 每次请求新建 `httpx.AsyncClient` | 请求级 |
 
 ## 5. 错误与取消
@@ -86,6 +89,7 @@ sequenceDiagram
 | 用户点「停」 | 客户端 abort → 服务端生成器取消，已生成部分写回 |
 | 模型挂了但页面已开 | 头部红点；聊天仍可打开，报错可见 |
 | 空消息 | 400，不建会话消息 |
+| 命中危机语句 | 不调模型，固定回应；日志只记 `safety_trigger`，不记内容 |
 
 ## 6. 前端结构
 
@@ -113,6 +117,7 @@ eval/scenarios.json  →  scripts/selfplay.py  →  POST /api/chat（每剧本�
 | 人格/语气 | `persona/base.md` | 热加载；改完跑 `selfplay.py` 两遍 |
 | 模型/端口/名字 | `config.toml` | 重启服务 |
 | 新接口 | `app.py` | 同步本文档第 3 节 |
+| 安全话术/联系人 | `config.local.toml` 的 `[safety]` | 改完重启；`tests/test_safety.py` 必须过 |
 | 页面/交互 | `web/*` | 改完刷新；没有浏览器自动化，需人工看 |
 | 评测剧本 | `eval/scenarios.json` | 剧本一旦用于对比就不要改，另开文件 |
 
@@ -123,4 +128,4 @@ eval/scenarios.json  →  scripts/selfplay.py  →  POST /api/chat（每剧本�
 - 单进程内存会话：多 worker 部署会串会话
 - 无鉴权，只绑 `127.0.0.1`；上手机要先加 token
 - 不给模型工具调用：流程将来由服务端状态机编排
-- 没有危机协议（红线，待人工补）
+- 危机协议是固定模板，不做语义判断；联系人只在你本机配置里

@@ -1,5 +1,5 @@
-# 小满的配置。改完重启服务生效。
-# 密钥不写在这里：需要时用环境变量 XIAOMAN_API_KEY。
+# 小满的公开配置。真实模型地址、个人联系人写进 config.local.toml（不会提交）。
+# 密钥只走环境变量。
 
 [app]
 name = "小满"
@@ -9,10 +9,23 @@ port = 8765
 started_on = "2026-10-27"
 
 [model]
-base_url = "http://vllm-qwen:8000/v1"
-model = "/workspace/models/Qwen2.5-7B-AWQ"
+# 任何 OpenAI 兼容端点；本机覆盖示例见 config.local.example.toml
+base_url = "http://127.0.0.1:8000/v1"
+model = "Qwen2.5-7B-Instruct"
 temperature = 0.6
 max_tokens = 400
 timeout_s = 60
-# 送进模型的历史消息条数上限（一步还没有长期记忆）
+# 送进模型的历史消息条数上限（第 1 步还没有长期记忆）
 max_history = 20
+
+[safety]
+enabled = true
+# 危机时给出的求助电话。可以按你所在城市改。
+hotlines = [
+  "12356 全国心理援助热线（24 小时）",
+  "010-82951332 北京心理危机研究与干预中心",
+]
+# 你自己的紧急联系人（手机号/QQ/微信）。写在 config.local.toml 里，别写在这。
+contacts = []
+# 除了内置触发词，再加你听得懂的说法
+extra_phrases = []

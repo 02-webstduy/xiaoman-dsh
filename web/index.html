@@ -15,6 +15,7 @@
         <p class="status"><span class="dot" id="dot"></span><span id="status">正在连模型…</span></p>
       </div>
       <nav class="actions">
+        <button type="button" class="ghost" id="help-btn">求助</button>
         <button type="button" class="ghost" id="persona-btn">人格</button>
         <button type="button" class="ghost" id="reset-btn">新对话</button>
       </nav>
@@ -43,6 +44,15 @@
       </header>
       <pre id="persona-text">加载中…</pre>
       <p class="hint">改 <code>src/xiaoman/persona/base.md</code>，刷新页面即生效。</p>
+    </dialog>
+
+    <dialog id="help-dialog" class="dialog">
+      <header>
+        <strong>现在就能用的帮助</strong>
+        <button type="button" class="ghost" id="help-close">关</button>
+      </header>
+      <div id="help-body" class="help-body">加载中…</div>
+      <p class="hint">我不能替代专业帮助；如果你有立即的危险，请拨 120。</p>
     </dialog>
 
     <script type="module" src="/assets/app.js"></script>
