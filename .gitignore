@@ -6,3 +6,4 @@ data/
 .secrets/
 *.egg-info/
 config.local.toml
+.env

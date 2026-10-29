@@ -77,11 +77,25 @@ def _read_toml(path: Path) -> dict[str, Any]:
     return tomllib.loads(path.read_text("utf-8"))
 
 
+def _load_dotenv() -> None:
+    """读仓库根的 .env（不进 git）；已存在的环境变量优先。"""
+    path = ROOT / ".env"
+    if not path.exists():
+        return
+    for line in path.read_text("utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
 def _cfg_path() -> Path:
     return Path(os.environ.get("XIAOMAN_CONFIG") or (ROOT / "config.toml"))
 
 
 def load(path: Path | None = None) -> AppConfig:
+    _load_dotenv()
     p = Path(path) if path else _cfg_path()
     raw = _read_toml(p)
     # 本机私密覆盖：与 config.toml 同目录的 config.local.toml

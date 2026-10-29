@@ -29,6 +29,24 @@ setsid nohup .venv/bin/python -m xiaoman > /tmp/xiaoman.log 2>&1 &
 
 模型地址、端口、名字都在 [config.toml](config.toml)；密钥只走环境变量。
 
+## 换成 API 模型（推荐）
+
+第 1 步默认接本地模型，是为了零成本跑通链路。**能力上限在模型，不在代码**：本地 7B 能演好"短回复"，演不好"想清楚"。
+
+```toml
+# config.local.toml
+[model]
+base_url = "https://api.deepseek.com/v1"
+model = "deepseek-chat"
+api_key_env = "XIAOMAN_API_KEY"
+```
+
+```bash
+echo 'XIAOMAN_API_KEY=sk-...' >> .env   # .env 不进 git
+```
+
+重启后 `/api/health` 会显示当前端点和模型。换模型不用改代码，也不用改人格。
+
 ## 版本迭代
 
 | 版本 | 改了什么 | 自玩评测（两轮合并） | 结论 |

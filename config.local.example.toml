@@ -2,6 +2,16 @@
 # 直接复制本文件为 config.local.toml 再改。
 
 [model]
+# 本地 vLLM：
+# base_url = "http://vllm-qwen:8000/v1"
+# model = "/workspace/models/Qwen2.5-7B-AWQ"
+#
+# 或 API（推荐）：
+# base_url = "https://api.deepseek.com/v1"
+# model = "deepseek-chat"
+# api_key_env = "XIAOMAN_API_KEY"
+#
+# 密钥写在仓库根的 .env 里：XIAOMAN_API_KEY=sk-...
 base_url = "http://vllm-qwen:8000/v1"
 model = "/workspace/models/Qwen2.5-7B-AWQ"
 
