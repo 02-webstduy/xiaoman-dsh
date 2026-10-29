@@ -4,4 +4,4 @@ __pycache__/
 eval/runs/
 data/
 .secrets/
-.egg-info/
+*.egg-info/
